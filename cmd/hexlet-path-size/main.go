@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"os"
+
+	"github.com/urfave/cli/v3"
+)
 
 func main() {
-	fmt.Println("Hello from Hexlet!")
+	err := (&cli.Command{
+		Usage: "print size of a file or directory",
+	}).Run(context.Background(), os.Args)
+	if err != nil {
+		return
+	}
 }
