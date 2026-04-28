@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func GetPathSize(path string, humanReadable bool) string {
+func GetPathSize(path string, humanReadable, withHidden bool) string {
 	entries, err := os.ReadDir(path)
 	size := 0
 	if err != nil {
@@ -15,7 +15,14 @@ func GetPathSize(path string, humanReadable bool) string {
 			if fileError != nil {
 				return fmt.Sprintf("Error: %s", fileError.Error())
 			}
-			size = int(f.Size())
+			fmt.Println(f.Name())
+			if withHidden {
+				if strings.HasPrefix(f.Name(), ".") {
+					size = int(f.Size())
+				}
+			} else {
+				size = int(f.Size())
+			}
 			return formatSize(size, humanReadable)
 		}
 		return fmt.Sprintf("Error: %s", err.Error())
@@ -29,7 +36,14 @@ func GetPathSize(path string, humanReadable bool) string {
 		if err != nil {
 			return fmt.Sprintf("Error: %s", err.Error())
 		}
-		size += int(fileInfo.Size())
+
+		if strings.HasPrefix(fileInfo.Name(), ".") {
+			if withHidden {
+				size += int(fileInfo.Size())
+			}
+		} else {
+			size += int(fileInfo.Size())
+		}
 	}
 
 	return formatSize(size, humanReadable)
