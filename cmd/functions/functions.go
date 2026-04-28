@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func GetPathSize(path string, humanReadable, withHidden bool) string {
+func GetPathSize(path string, humanReadable, withHidden, recursive bool) string {
 	entries, err := os.ReadDir(path)
 	size := 0
 	if err != nil {
