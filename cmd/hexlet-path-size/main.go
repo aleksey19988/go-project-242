@@ -12,8 +12,6 @@ import (
 
 func main() {
 	cmd := &cli.Command{
-		Name:  "boom",
-		Usage: "print size of a file or directory",
 		Action: func(ctx context.Context, cmd *cli.Command) error {
 			path := cmd.Args().Get(0)
 			res := functions.GetPathSize(path)

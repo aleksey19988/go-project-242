@@ -14,10 +14,10 @@ func TestSimple(t *testing.T) {
 
 func TestEmptyPath(t *testing.T) {
 	res := functions.GetPathSize("")
-	require.Equal(t, "Error: open : no such file or directory\n", res)
+	require.Equal(t, "Error: open : no such file or directory", res)
 }
 
 func TestUnexpectedPath(t *testing.T) {
 	res := functions.GetPathSize("otherpath")
-	require.Equal(t, "Error: open otherpath: no such file or directory\n", res)
+	require.Equal(t, "Error: open otherpath: no such file or directory", res)
 }
