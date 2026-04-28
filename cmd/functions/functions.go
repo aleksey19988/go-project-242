@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func GetPathSize(path string) string {
+func GetPathSize(path string, humanReadable bool) string {
 	entries, err := os.ReadDir(path)
 	size := 0
 	if err != nil {
@@ -16,7 +16,7 @@ func GetPathSize(path string) string {
 				return fmt.Sprintf("Error: %s", fileError.Error())
 			}
 			size = int(f.Size())
-			return fmt.Sprintf("%dB", size)
+			return formatSize(size, humanReadable)
 		}
 		return fmt.Sprintf("Error: %s", err.Error())
 	}
@@ -32,5 +32,49 @@ func GetPathSize(path string) string {
 		size += int(fileInfo.Size())
 	}
 
-	return fmt.Sprintf("%dB", size)
+	return formatSize(size, humanReadable)
+}
+
+func formatSize(sizeInBytes int, humanReadable bool) string {
+	if !humanReadable {
+		return fmt.Sprintf("%dB", sizeInBytes)
+	}
+
+	const (
+		_  = iota //ignore first value by assigning to blank identifier
+		KB = 1 << (10 * iota)
+		MB
+		GB
+		TB
+		PB
+		EB
+	)
+
+	res := 0.0
+	unit := "B"
+
+	switch {
+	case sizeInBytes >= EB:
+		res = float64(sizeInBytes) / EB
+		unit = "EB"
+	case sizeInBytes >= PB:
+		res = float64(sizeInBytes) / PB
+		unit = "PB"
+	case sizeInBytes >= TB:
+		res = float64(sizeInBytes) / TB
+		unit = "TB"
+	case sizeInBytes >= GB:
+		res = float64(sizeInBytes) / GB
+		unit = "GB"
+	case sizeInBytes >= MB:
+		res = float64(sizeInBytes) / MB
+		unit = "MB"
+	case sizeInBytes >= KB:
+		res = float64(sizeInBytes) / KB
+		unit = "KB"
+	default:
+		return fmt.Sprintf("%dB", sizeInBytes)
+	}
+
+	return fmt.Sprintf("%.1f%s", res, unit)
 }
