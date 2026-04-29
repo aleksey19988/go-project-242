@@ -15,10 +15,8 @@ func GetPathSize(path string, humanReadable, withHidden, recursive bool) string 
 			if fileError != nil {
 				return fmt.Sprintf("Error: %s", fileError.Error())
 			}
-			if withHidden {
-				if strings.HasPrefix(f.Name(), ".") {
-					size = int(f.Size())
-				}
+			if strings.HasPrefix(f.Name(), ".") && withHidden {
+				size = int(f.Size())
 			} else {
 				size = int(f.Size())
 			}
