@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"code/cmd/functions"
+	"disk_analys_project/cmd/functions"
 	"testing"
 
 	"github.com/stretchr/testify/require"

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"code/cmd/functions"
 	"context"
+	"disk_analys_project/cmd/functions"
 	"fmt"
 	"log"
 	"os"

@@ -1,4 +1,4 @@
-module code
+module disk_analys_project
 
 go 1.25.5
 
