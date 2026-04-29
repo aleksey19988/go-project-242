@@ -8,19 +8,19 @@ import (
 	"strings"
 )
 
-func GetPathSize(path string, humanReadable, withHidden, recursive bool) string {
+func GetPathSize(path string, humanReadable, withHidden, recursive bool) (string, error) {
 	entries, err := os.ReadDir(path)
 	size := 0
 	if err != nil {
 		if strings.Contains(err.Error(), "not a directory") {
 			f, fileError := os.Lstat(path)
 			if fileError != nil {
-				return fmt.Sprintf("Error: %s", fileError.Error())
+				return "", err
 			}
 			size += getFileSize(f, strings.HasPrefix(f.Name(), "."), withHidden)
-			return formatSize(size, humanReadable)
+			return formatSize(size, humanReadable), nil
 		}
-		return fmt.Sprintf("Error: %s", err.Error())
+		return "", err
 	}
 
 	for _, entry := range entries {
@@ -28,7 +28,7 @@ func GetPathSize(path string, humanReadable, withHidden, recursive bool) string 
 			if recursive {
 				s, err := getIncludeDirSize(filepath.Join(path, entry.Name()), withHidden, recursive)
 				if err != nil {
-					return fmt.Sprintf("Error: %s", err.Error())
+					return "", err
 				}
 				size += s
 			} else {
@@ -37,13 +37,13 @@ func GetPathSize(path string, humanReadable, withHidden, recursive bool) string 
 		}
 		fileInfo, err := entry.Info()
 		if err != nil {
-			return fmt.Sprintf("Error: %s", err.Error())
+			return "", err
 		}
 
 		size += getFileSize(fileInfo, strings.HasPrefix(fileInfo.Name(), "."), withHidden)
 	}
 
-	return formatSize(size, humanReadable)
+	return formatSize(size, humanReadable), nil
 }
 
 func getIncludeDirSize(path string, withHidden, recursive bool) (int, error) {

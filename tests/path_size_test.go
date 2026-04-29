@@ -8,40 +8,40 @@ import (
 )
 
 func TestPath(t *testing.T) {
-	res := code.GetPathSize("../testdata", false, false, false)
+	res, _ := code.GetPathSize("../testdata", false, false, false)
 	require.Equal(t, "32248B", res)
 
-	res = code.GetPathSize("../testdata", false, true, false)
+	res, _ = code.GetPathSize("../testdata", false, true, false)
 	require.Equal(t, "39170B", res)
 
-	res = code.GetPathSize("../testdata", true, false, false)
+	res, _ = code.GetPathSize("../testdata", true, false, false)
 	require.Equal(t, "31.5KB", res)
 
-	res = code.GetPathSize("../testdata", true, true, false)
+	res, _ = code.GetPathSize("../testdata", true, true, false)
 	require.Equal(t, "38.3KB", res)
 
-	res = code.GetPathSize("otherpath", true, true, false)
+	res, _ = code.GetPathSize("otherpath", true, true, false)
 	require.Equal(t, "Error: open otherpath: no such file or directory", res)
 
-	res = code.GetPathSize("../testdata/emptydir", false, false, false)
+	res, _ = code.GetPathSize("../testdata/emptydir", false, false, false)
 	require.Equal(t, "0B", res)
 }
 
 func TestFile(t *testing.T) {
-	res := code.GetPathSize("../testdata/text.txt", false, false, false)
+	res, _ := code.GetPathSize("../testdata/text.txt", false, false, false)
 	require.Equal(t, "25326B", res)
 
-	res = code.GetPathSize("../testdata/text.txt", true, false, false)
+	res, _ = code.GetPathSize("../testdata/text.txt", true, false, false)
 	require.Equal(t, "24.7KB", res)
 }
 
 func TestRecursive(t *testing.T) {
-	res := code.GetPathSize("../testdata", false, false, false)
+	res, _ := code.GetPathSize("../testdata", false, false, false)
 	require.Equal(t, "32248B", res)
 
-	res = code.GetPathSize("../testdata", false, false, true)
+	res, _ = code.GetPathSize("../testdata", false, false, true)
 	require.Equal(t, "79610B", res)
 
-	res = code.GetPathSize("../testdata", false, true, true)
+	res, _ = code.GetPathSize("../testdata", false, true, true)
 	require.Equal(t, "86532B", res)
 }

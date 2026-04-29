@@ -36,12 +36,15 @@ func main() {
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
 			path := cmd.Args().Get(0)
-			res := code.GetPathSize(
+			res, err := code.GetPathSize(
 				path,
 				cmd.Bool("human"),
 				cmd.Bool("all"),
 				cmd.Bool("recursive"),
 			)
+			if err != nil {
+				return err
+			}
 			fmt.Printf("%s\t%s\n", res, path)
 			return nil
 		},
