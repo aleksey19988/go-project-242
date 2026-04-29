@@ -31,9 +31,17 @@ func TestFile(t *testing.T) {
 	res := functions.GetPathSize("../testdata/text.txt", false, false, false)
 	require.Equal(t, "25326B", res)
 
-	res = functions.GetPathSize("../testdata/text.txt", false, true, false)
-	require.Equal(t, "0B", res)
-
 	res = functions.GetPathSize("../testdata/text.txt", true, false, false)
 	require.Equal(t, "24.7KB", res)
+}
+
+func TestRecursive(t *testing.T) {
+	res := functions.GetPathSize("../testdata", false, false, false)
+	require.Equal(t, "32248B", res)
+
+	res = functions.GetPathSize("../testdata", false, false, true)
+	require.Equal(t, "79610B", res)
+
+	res = functions.GetPathSize("../testdata", false, true, true)
+	require.Equal(t, "86532B", res)
 }
