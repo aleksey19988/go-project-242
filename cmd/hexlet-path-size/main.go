@@ -42,7 +42,7 @@ func main() {
 				cmd.Bool("all"),
 				cmd.Bool("recursive"),
 			)
-			fmt.Printf("%s \t%s\n", res, path)
+			fmt.Printf("%s\t%s\n", res, path)
 			return nil
 		},
 	}
