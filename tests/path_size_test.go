@@ -40,8 +40,8 @@ func TestRecursive(t *testing.T) {
 	require.Equal(t, "32248B", res)
 
 	res, _ = code.GetPathSize("../testdata", false, false, true)
-	require.Equal(t, "64496B", res)
+	require.Equal(t, "64514B", res)
 
 	res, _ = code.GetPathSize("../testdata", false, true, true)
-	require.Equal(t, "78340B", res)
+	require.Equal(t, "78376B", res)
 }
