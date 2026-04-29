@@ -100,7 +100,7 @@ func formatSize(sizeInBytes int, humanReadable bool) string {
 	}
 
 	const (
-		_  = iota //ignore first value by assigning to blank identifier
+		_  = iota
 		KB = 1 << (10 * iota)
 		MB
 		GB
@@ -109,31 +109,20 @@ func formatSize(sizeInBytes int, humanReadable bool) string {
 		EB
 	)
 
-	res := 0.0
-	unit := "B"
-
 	switch {
 	case sizeInBytes >= EB:
-		res = float64(sizeInBytes) / EB
-		unit = "EB"
+		return fmt.Sprintf("%.1fEB", float64(sizeInBytes)/EB)
 	case sizeInBytes >= PB:
-		res = float64(sizeInBytes) / PB
-		unit = "PB"
+		return fmt.Sprintf("%.1fPB", float64(sizeInBytes)/PB)
 	case sizeInBytes >= TB:
-		res = float64(sizeInBytes) / TB
-		unit = "TB"
+		return fmt.Sprintf("%.1fTB", float64(sizeInBytes)/TB)
 	case sizeInBytes >= GB:
-		res = float64(sizeInBytes) / GB
-		unit = "GB"
+		return fmt.Sprintf("%.1fGB", float64(sizeInBytes)/GB)
 	case sizeInBytes >= MB:
-		res = float64(sizeInBytes) / MB
-		unit = "MB"
+		return fmt.Sprintf("%.1fMB", float64(sizeInBytes)/MB)
 	case sizeInBytes >= KB:
-		res = float64(sizeInBytes) / KB
-		unit = "KB"
+		return fmt.Sprintf("%.1fKB", float64(sizeInBytes)/KB)
 	default:
 		return fmt.Sprintf("%dB", sizeInBytes)
 	}
-
-	return fmt.Sprintf("%.1f%s", res, unit)
 }
