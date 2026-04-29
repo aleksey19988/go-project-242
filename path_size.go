@@ -50,6 +50,9 @@ func getSize(dirPath string, withHidden, recursive bool) (int, error) {
 
 	for _, entry := range entries {
 		if entry.IsDir() {
+			if strings.HasPrefix(entry.Name(), ".") && !withHidden {
+				continue
+			}
 			if recursive {
 				s, err := getSize(filepath.Join(dirPath, entry.Name()), withHidden, recursive)
 				if err != nil {
