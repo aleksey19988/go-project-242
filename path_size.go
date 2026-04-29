@@ -34,13 +34,13 @@ func GetPathSize(path string, humanReadable, withHidden, recursive bool) (string
 			} else {
 				continue
 			}
+		} else {
+			fileInfo, err := entry.Info()
+			if err != nil {
+				return "", err
+			}
+			size += getFileSize(fileInfo, strings.HasPrefix(fileInfo.Name(), "."), withHidden)
 		}
-		fileInfo, err := entry.Info()
-		if err != nil {
-			return "", err
-		}
-
-		size += getFileSize(fileInfo, strings.HasPrefix(fileInfo.Name(), "."), withHidden)
 	}
 
 	return formatSize(size, humanReadable), nil
@@ -71,13 +71,13 @@ func getIncludeDirSize(path string, withHidden, recursive bool) (int, error) {
 			} else {
 				continue
 			}
+		} else {
+			fileInfo, err := entry.Info()
+			if err != nil {
+				return 0, err
+			}
+			size += getFileSize(fileInfo, strings.HasPrefix(fileInfo.Name(), "."), withHidden)
 		}
-		fileInfo, err := entry.Info()
-		if err != nil {
-			return 0, err
-		}
-
-		size += int(fileInfo.Size())
 	}
 
 	return size, nil

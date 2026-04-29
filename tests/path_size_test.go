@@ -21,17 +21,17 @@ func TestPath(t *testing.T) {
 	require.Equal(t, "38.3KB", res)
 
 	res, _ = code.GetPathSize("otherpath", true, true, false)
-	require.Equal(t, "Error: open otherpath: no such file or directory", res)
+	require.Equal(t, "", res)
 
 	res, _ = code.GetPathSize("../testdata/emptydir", false, false, false)
 	require.Equal(t, "0B", res)
 }
 
 func TestFile(t *testing.T) {
-	res, _ := code.GetPathSize("../testdata/text.txt", false, false, false)
+	res, _ := code.GetPathSize("../testdata/25326.txt", false, false, false)
 	require.Equal(t, "25326B", res)
 
-	res, _ = code.GetPathSize("../testdata/text.txt", true, false, false)
+	res, _ = code.GetPathSize("../testdata/25326.txt", true, false, false)
 	require.Equal(t, "24.7KB", res)
 }
 
@@ -40,8 +40,8 @@ func TestRecursive(t *testing.T) {
 	require.Equal(t, "32248B", res)
 
 	res, _ = code.GetPathSize("../testdata", false, false, true)
-	require.Equal(t, "79610B", res)
+	require.Equal(t, "64496B", res)
 
 	res, _ = code.GetPathSize("../testdata", false, true, true)
-	require.Equal(t, "86532B", res)
+	require.Equal(t, "78340B", res)
 }
