@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func GetPathSize(path string, humanReadable, withHidden, recursive bool) (string, error) {
+func GetPathSize(path string, recursive, humanReadable, withHidden bool) (string, error) {
 	size, err := getSize(path, withHidden, recursive)
 	if err != nil {
 		return "", err
